@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMV Driving Practice - বাংলা</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6b8e23 0%, #800020 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #800020, #a52a2a);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #6b8e23;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #f8f8f8;
+        }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-selector select {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .features-bar {
+            background: #6b8e23;
+            padding: 0.8rem 2rem;
+            display: flex;
+            gap: 20px;
+            color: white;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #800020;
+        }
+
+        .feature-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .feature-toggle input {
+            margin-right: 5px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 2px solid #800020;
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-section h1 {
+            color: #800020;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #6b8e23;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #800020;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .practice-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 2px solid #6b8e23;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .test-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, #e8f4e8, #d4edda);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 2px solid #6b8e23;
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: #2d5016;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background-color: rgba(248, 248, 248, 0.9);
+            border: 2px solid #6b8e23;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option:hover {
+            background-color: #e8f4e8;
+            border-color: #800020;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(128, 0, 32, 0.2);
+        }
+
+        .option.selected {
+            background-color: #d4edda;
+            border-color: #800020;
+            box-shadow: 0 0 0 2px rgba(128, 0, 32, 0.3);
+        }
+
+        .option.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+
+        .option.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .option-number {
+            background: #e9ecef;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .option.selected .option-number {
+            background: #800020;
+            color: white;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #800020, #a52a2a);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(128, 0, 32, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #6b8e23, #7a9c1e);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(107, 142, 35, 0.4);
+        }
+
+        button:disabled {
+            background: #a6acaf;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .secondary-btn {
+            background: linear-gradient(135deg, #6b8e23, #7a9c1e);
+        }
+
+        .secondary-btn:hover {
+            background: linear-gradient(135deg, #800020, #a52a2a);
+        }
+
+        .progress-container {
+            margin: 2rem 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #6b8e23, #800020);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .result-section {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin-top: 2rem;
+            display: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 2px solid #800020;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-section h2 {
+            color: #800020;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#6b8e23 0% 0%, #e9ecef 0% 100%);
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 4px solid #800020;
+        }
+
+        .score-inner {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .score-percent {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #800020;
+        }
+
+        .score-text {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .detail-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #6b8e23;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #800020, #6b8e23);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 3px solid #6b8e23;
+        }
+
+        .translation-note {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #6b8e23;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+
+        .hint-box {
+            background: linear-gradient(135deg, #e8f4e8, #d4edda);
+            border: 2px solid #6b8e23;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #6b8e23 0%, #800020 100%);
+                padding: 1rem;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .features-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .test-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+            }
+            
+            .option {
+                padding: 12px 15px;
+            }
+            
+            .welcome-section,
+            .practice-section,
+            .result-section {
+                margin: 1rem 0;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-car"></i>
+            <span id="headerTitle">DMV Driving Practice</span>
+        </div>
+        <div class="language-selector">
+            <span id="languageLabel">Language:</span>
+            <select id="languageSelect">
+                <option value="en">English</option>
+                <option value="bn">বাংলা (Bengali)</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="features-bar">
+        <div class="feature-toggle">
+            <input type="checkbox" id="instantFeedback">
+            <label for="instantFeedback" id="instantFeedbackLabel">Instant Feedback</label>
+        </div>
+        <div class="feature-toggle">
+            <input type="checkbox" id="showHints">
+            <label for="showHints" id="showHintsLabel">Show Hints</label>
+        </div>
+    </div>
+
+    <main>
+        <section class="welcome-section" id="welcomeSection">
+            <h1 id="welcomeTitle">DMV Driving Practice Test</h1>
+            <p id="welcomeText">Prepare for your driving test with our comprehensive practice questions. This test contains questions similar to those on the actual DMV exam, with Bengali translation support.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label" id="statQuestions">Practice Questions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label" id="statLanguages">Languages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label" id="statCategories">Question Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-label" id="statPassRate">Passing Score</div>
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <button id="startTest" style="font-size: 1.2rem; padding: 15px 30px;">
+                    <i class="fas fa-play-circle"></i>
+                    <span id="startButtonText">Start Practice Test</span>
+                </button>
+            </div>
+
+            <div class="translation-note">
+                * Translation provided for assistance. For official purposes, always refer to the original English version.
+            </div>
+        </section>
+
+        <section class="practice-section" id="testSection">
+            <div class="test-header">
+                <h2 id="testTitle">Driving Practice Test</h2>
+                <div class="test-info">
+                    <div class="info-item" id="questionCounter">Question 1 of 5</div>
+                    <div class="info-item" id="categoryDisplay">Road Signs</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressText">0% Complete</span>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+            </div>
+
+            <div class="hint-box" id="hintBox">
+                <strong id="hintLabel">Hint:</strong> <span id="hintText"></span>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="prevButton" class="secondary-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span id="prevButtonText">Previous</span>
+                </button>
+                <button id="hintButton" class="secondary-btn">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="hintButtonText">Show Hint</span>
+                </button>
+                <button id="nextButton">
+                    <span id="nextButtonText">Next</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section class="result-section" id="resultSection">
+            <h2 id="resultTitle">Test Completed!</h2>
+            
+            <div class="score-circle" id="scoreCircle">
+                <div class="score-inner">
+                    <div class="score-percent" id="scorePercent">0%</div>
+                    <div class="score-text" id="scoreLabel">Score</div>
+                </div>
+            </div>
+
+            <div class="result-details">
+                <div class="detail-card">
+                    <div class="stat-number" id="correctAnswers">0</div>
+                    <div class="stat-label" id="correctLabel">Correct Answers</div>
+                </div>
+                <div class="detail-card">
+                    <div class="stat-number" id="incorrectAnswers">0</div>
+                    <div class="stat-label" id="incorrectLabel">Incorrect Answers</div>
+                </div>
+            </div>
+
+            <p id="resultMessage" style="margin: 1.5rem 0; font-size: 1.1rem;"></p>
+
+            <button id="restartTest">
+                <i class="fas fa-redo"></i>
+                <span id="restartButtonText">Take Test Again</span>
+            </button>
+        </section>
+    </main>
+
+    <footer>
+        <p id="footerText">DMV Driving Practice Test - For Educational Purposes</p>
+    </footer>
+
+    <script>
+        // Questions database with Bengali translations
+        const questions = [
+            {
+                id: 1,
+                category: "Road Signs",
+                question: {
+                    en: "What does a red octagonal sign mean?",
+                    bn: "একটি লাল অষ্টাভুজ চিহ্নের অর্থ কী?"
+                },
+                options: {
+                    en: ["Stop", "Yield", "No Entry", "Speed Limit"],
+                    bn: ["স্টপ", "ইয়েল্ড", "নো এন্ট্রি", "গতি সীমা"]
+                },
+                correctAnswer: 0,
+                hint: {
+                    en: "This sign requires you to come to a complete stop.",
+                    bn: "এই চিহ্নটি আপনাকে সম্পূর্ণভাবে থামতে বাধ্য করে।"
+                }
+            },
+            {
+                id: 2,
+                category: "Road Signs",
+                question: {
+                    en: "A yellow diamond-shaped sign indicates:",
+                    bn: "একটি হলুদ রম্বস-আকৃতির চিহ্ন নির্দেশ করে:"
+                },
+                options: {
+                    en: ["Warning", "Stop", "Speed Limit", "Destination"],
+                    bn: ["সতর্কতা", "স্টপ", "গতি সীমা", "গন্তব্য"]
+                },
+                correctAnswer: 0,
+                hint: {
+                    en: "These signs warn about upcoming road conditions.",
+                    bn: "এই চিহ্নগুলি আসন্ন রাস্তার অবস্থা সম্পর্কে সতর্ক করে।"
+                }
+            },
+            {
+                id: 3,
+                category: "Traffic Laws",
+                question: {
+                    en: "When must you stop for a school bus?",
+                    bn: "আপনি কখন একটি স্কুল বাসের জন্য থামতে বাধ্য?"
+                },
+                options: {
+                    en: ["When red lights are flashing", "Only if children are visible", "During school hours only", "Never - slow down instead"],
+                    bn: ["যখন লাল বাতি জ্বলজ্বল করছে", "শুধুমাত্র যদি শিশুরা দৃশ্যমান হয়", "শুধুমাত্র স্কুলের সময়ে", "কখনই নয় - পরিবর্তে গতি কমিয়ে দিন"]
+                },
+                correctAnswer: 0,
+                hint: {
+                    en: "Flashing red lights mean stop in both directions.",
+                    bn: "জ্বলজ্বল করা লাল বাতি মানে উভয় দিকে থামুন।"
+                }
+            },
+            {
+                id: 4,
+                category: "Driving Rules",
+                question: {
+                    en: "What is the purpose of the '3-second rule'?",
+                    bn: "'৩-সেকেন্ড নিয়ম' এর উদ্দেশ্য কী?"
+                },
+                options: {
+                    en: ["Maintain safe following distance", "Time traffic signals", "Measure braking distance", "Count seconds at stop signs"],
+                    bn: ["নিরাপদ অনুসরণ দূরত্ব বজায় রাখা", "ট্রাফিক সিগন্যালের সময়", "ব্রেকিং দূরত্ব পরিমাপ করা", "স্টপ সাইনে সেকেন্ড গণনা করা"]
+                },
+                correctAnswer: 0,
+                hint: {
+                    en: "It helps prevent rear-end collisions.",
+                    bn: "এটি রিয়ার-এন্ড সংঘর্ষ প্রতিরোধে সাহায্য করে।"
+                }
+            },
+            {
+                id: 5,
+                category: "Safety Procedures",
+                question: {
+                    en: "When driving in heavy rain, you should:",
+                    bn: "অতিবৃষ্টিতে গাড়ি চালানোর সময়, আপনার উচিত:"
+                },
+                options: {
+                    en: ["Use low beam headlights", "Use high beam headlights", "Drive without lights", "Use hazard lights"],
+                    bn: ["লো বিম হেডলাইট ব্যবহার করুন", "হাই বিম হেডলাইট ব্যবহার করুন", "লাইট ছাড়া গাড়ি চালান", "হ্যাজার্ড লাইট ব্যবহার করুন"]
+                },
+                correctAnswer: 0,
+                hint: {
+                    en: "High beams reflect off rain and reduce visibility.",
+                    bn: "হাই বিম বৃষ্টিতে প্রতিফলিত হয়ে দৃশ্যমানতা হ্রাস করে।"
+                }
+            }
+        ];
+
+        // Text translations
+        const translations = {
+            en: {
+                headerTitle: "DMV Driving Practice",
+                languageLabel: "Language:",
+                instantFeedbackLabel: "Instant Feedback",
+                showHintsLabel: "Show Hints",
+                welcomeTitle: "DMV Driving Practice Test",
+                welcomeText: "Prepare for your driving test with our comprehensive practice questions. This test contains questions similar to those on the actual DMV exam, with Bengali translation support.",
+                statQuestions: "Practice Questions",
+                statLanguages: "Languages",
+                statCategories: "Question Categories",
+                statPassRate: "Passing Score",
+                startButtonText: "Start Practice Test",
+                testTitle: "Driving Practice Test",
+                prevButtonText: "Previous",
+                hintButtonText: "Show Hint",
+                nextButtonText: "Next",
+                hintLabel: "Hint:",
+                resultTitle: "Test Completed!",
+                scoreLabel: "Score",
+                correctLabel: "Correct Answers",
+                incorrectLabel: "Incorrect Answers",
+                restartButtonText: "Take Test Again",
+                footerText: "DMV Driving Practice Test - For Educational Purposes",
+                translationNote: "* Translation provided for assistance. For official purposes, always refer to the original English version."
+            },
+            bn: {
+                headerTitle: "DMV ড্রাইভিং অনুশীলন",
+                languageLabel: "ভাষা:",
+                instantFeedbackLabel: "তাত্ক্ষণিক প্রতিক্রিয়া",
+                showHintsLabel: "ইঙ্গিত দেখান",
+                welcomeTitle: "DMV ড্রাইভিং অনুশীলন পরীক্ষা",
+                welcomeText: "আমাদের বিস্তৃত অনুশীলন প্রশ্নগুলির সাথে আপনার ড্রাইভিং পরীক্ষার জন্য প্রস্তুত হন। এই পরীক্ষায় প্রকৃত DMV পরীক্ষার মতো প্রশ্ন রয়েছে, বাংলা অনুবাদ সহ।",
+                statQuestions: "অনুশীলন প্রশ্ন",
+                statLanguages: "ভাষা",
+                statCategories: "প্রশ্ন বিভাগ",
+                statPassRate: "পাসিং স্কোর",
+                startButtonText: "অনুশীলন পরীক্ষা শুরু করুন",
+                testTitle: "ড্রাইভিং অনুশীলন পরীক্ষা",
+                prevButtonText: "পূর্ববর্তী",
+                hintButtonText: "ইঙ্গিত দেখান",
+                nextButtonText: "পরবর্তী",
+                hintLabel: "ইঙ্গিত:",
+                resultTitle: "পরীক্ষা সম্পন্ন!",
+                scoreLabel: "স্কোর",
+                correctLabel: "সঠিক উত্তর",
+                incorrectLabel: "ভুল উত্তর",
+                restartButtonText: "আবার পরীক্ষা দিন",
+                footerText: "DMV ড্রাইভিং অনুশীলন পরীক্ষা - শিক্ষামূলক উদ্দেশ্যে",
+                translationNote: "* সহায়তার জন্য অনুবাদ প্রদান করা হয়েছে। অফিসিয়াল উদ্দেশ্যে, সর্বদা মূল ইংরেজি সংস্করণটি দেখুন।"
+            }
+        };
+
+        // DOM Elements
+        const languageSelect = document.getElementById('languageSelect');
+        const welcomeSection = document.getElementById('welcomeSection');
+        const testSection = document.getElementById('testSection');
+        const resultSection = document.getElementById('resultSection');
+        const startTestButton = document.getElementById('startTest');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const restartButton = document.getElementById('restartTest');
+        const hintButton = document.getElementById('hintButton');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressBar = document.getElementById('progressBar');
+        const hintBox = document.getElementById('hintBox');
+        const hintText = document.getElementById('hintText');
+
+        // App state
+        let currentLanguage = 'en';
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+
+        // Initialize the app
+        function init() {
+            console.log("Initializing app...");
+            
+            // Set up event listeners
+            languageSelect.addEventListener('change', handleLanguageChange);
+            startTestButton.addEventListener('click', startTest);
+            prevButton.addEventListener('click', showPreviousQuestion);
+            nextButton.addEventListener('click', showNextQuestion);
+            restartButton.addEventListener('click', restartTest);
+            hintButton.addEventListener('click', toggleHint);
+            
+            // Initialize user answers
+            userAnswers = new Array(questions.length).fill(null);
+            
+            // Update UI with current language
+            updateLanguage();
+            
+            console.log("App initialized successfully");
+        }
+
+        function handleLanguageChange() {
+            currentLanguage = languageSelect.value;
+            console.log("Language changed to:", currentLanguage);
+            updateLanguage();
+            
+            // Update current question if test is in progress
+            if (testSection.style.display !== 'none') {
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLanguage];
+            
+            // Update all text elements
+            document.getElementById('headerTitle').textContent = t.headerTitle;
+            document.getElementById('languageLabel').textContent = t.languageLabel;
+            document.getElementById('instantFeedbackLabel').textContent = t.instantFeedbackLabel;
+            document.getElementById('showHintsLabel').textContent = t.showHintsLabel;
+            document.getElementById('welcomeTitle').textContent = t.welcomeTitle;
+            document.getElementById('welcomeText').textContent = t.welcomeText;
+            document.getElementById('statQuestions').textContent = t.statQuestions;
+            document.getElementById('statLanguages').textContent = t.statLanguages;
+            document.getElementById('statCategories').textContent = t.statCategories;
+            document.getElementById('statPassRate').textContent = t.statPassRate;
+            document.getElementById('startButtonText').textContent = t.startButtonText;
+            document.getElementById('testTitle').textContent = t.testTitle;
+            document.getElementById('prevButtonText').textContent = t.prevButtonText;
+            document.getElementById('hintButtonText').textContent = t.hintButtonText;
+            document.getElementById('nextButtonText').textContent = t.nextButtonText;
+            document.getElementById('hintLabel').textContent = t.hintLabel;
+            document.getElementById('resultTitle').textContent = t.resultTitle;
+            document.getElementById('scoreLabel').textContent = t.scoreLabel;
+            document.getElementById('correctLabel').textContent = t.correctLabel;
+            document.getElementById('incorrectLabel').textContent = t.incorrectLabel;
+            document.getElementById('restartButtonText').textContent = t.restartButtonText;
+            document.getElementById('footerText').textContent = t.footerText;
+            document.querySelector('.translation-note').textContent = t.translationNote;
+
+            // Update question counter if test is active
+            if (testSection.style.display !== 'none') {
+                document.getElementById('questionCounter').textContent = 
+                    currentLanguage === 'en' 
+                        ? `Question ${currentQuestion + 1} of ${questions.length}`
+                        : `প্রশ্ন ${currentQuestion + 1} / ${questions.length}`;
+            }
+        }
+
+        function startTest() {
+            console.log("Starting test...");
+            welcomeSection.style.display = 'none';
+            testSection.style.display = 'block';
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            displayQuestion(currentQuestion);
+            updateProgressBar();
+        }
+
+        function displayQuestion(index) {
+            console.log("Displaying question:", index);
+            const question = questions[index];
+            
+            // Update question text
+            questionText.textContent = `${index + 1}. ${question.question[currentLanguage]}`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            question.options[currentLanguage].forEach((option, optionIndex) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                
+                // Mark as selected if previously chosen
+                if (userAnswers[index] === optionIndex) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-number">${String.fromCharCode(65 + optionIndex)}</div>
+                    <div>${option}</div>
+                `;
+                
+                // Add click event listener
+                optionElement.addEventListener('click', function() {
+                    console.log("Option clicked:", optionIndex);
+                    selectOption(optionIndex);
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            prevButton.disabled = index === 0;
+            
+            // Update next button text for last question
+            if (index === questions.length - 1) {
+                nextButton.innerHTML = currentLanguage === 'en' 
+                    ? 'Finish <i class="fas fa-arrow-right"></i>' 
+                    : 'শেষ করুন <i class="fas fa-arrow-right"></i>';
+            } else {
+                nextButton.innerHTML = currentLanguage === 'en' 
+                    ? 'Next <i class="fas fa-arrow-right"></i>' 
+                    : 'পরবর্তী <i class="fas fa-arrow-right"></i>';
+            }
+            
+            // Update question counter
+            document.getElementById('questionCounter').textContent = 
+                currentLanguage === 'en' 
+                    ? `Question ${index + 1} of ${questions.length}`
+                    : `প্রশ্ন ${index + 1} / ${questions.length}`;
+            
+            // Update category
+            document.getElementById('categoryDisplay').textContent = question.category;
+            
+            // Hide hint box
+            hintBox.style.display = 'none';
+            document.getElementById('hintButtonText').textContent = 
+                currentLanguage === 'en' ? 'Show Hint' : 'ইঙ্গিত দেখান';
+            
+            updateProgressBar();
+        }
+
+        function selectOption(optionIndex) {
+            console.log("Selecting option:", optionIndex);
+            
+            // Remove selected class from all options
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            options[optionIndex].classList.add('selected');
+            
+            // Save user's answer
+            userAnswers[currentQuestion] = optionIndex;
+            
+            console.log("User answer saved:", userAnswers);
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function showNextQuestion() {
+            if (userAnswers[currentQuestion] === null) {
+                alert(currentLanguage === 'en' 
+                    ? "Please select an answer before continuing." 
+                    : "চালিয়ে যাওয়ার之前 একটি উত্তর নির্বাচন করুন।");
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                finishTest();
+            }
+        }
+
+        function toggleHint() {
+            const hint = questions[currentQuestion].hint[currentLanguage];
+            if (hintBox.style.display === 'none') {
+                hintText.textContent = hint;
+                hintBox.style.display = 'block';
+                document.getElementById('hintButtonText').textContent = 
+                    currentLanguage === 'en' ? 'Hide Hint' : 'ইঙ্গিত লুকান';
+            } else {
+                hintBox.style.display = 'none';
+                document.getElementById('hintButtonText').textContent = 
+                    currentLanguage === 'en' ? 'Show Hint' : 'ইঙ্গিত দেখান';
+            }
+        }
+
+        function finishTest() {
+            let score = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === questions[index].correctAnswer) {
+                    score++;
+                }
+            });
+            
+            testSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('scorePercent').textContent = `${percentage}%`;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('incorrectAnswers').textContent = questions.length - score;
+            
+            // Update score circle
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.style.background = `conic-gradient(#6b8e23 0% ${percentage}%, #e9ecef ${percentage}% 100%)`;
+            
+            // Result message
+            let message = "";
+            if (percentage >= 80) {
+                message = currentLanguage === 'en' 
+                    ? "Excellent! You're ready for the real DMV test!" 
+                    : "চমৎকার! আপনি আসল DMV পরীক্ষার জন্য প্রস্তুত!";
+            } else if (percentage >= 60) {
+                message = currentLanguage === 'en' 
+                    ? "Good job! Review the questions and try again." 
+                    : "ভালো কাজ! প্রশ্নগুলি পর্যালোচনা করুন এবং আবার চেষ্টা করুন।";
+            } else {
+                message = currentLanguage === 'en' 
+                    ? "Keep practicing. You'll improve with more study." 
+                    : "অনুশীলন চালিয়ে যান। আরও অধ্যয়নের সাথে আপনি উন্নতি করবেন।";
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function restartTest() {
+            resultSection.style.display = 'none';
+            welcomeSection.style.display = 'block';
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = 
+                currentLanguage === 'en' 
+                    ? `${Math.round(progress)}%
